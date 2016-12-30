@@ -1,10 +1,8 @@
 # Tutorial Instalação do Odoo no Ubuntu Server 16.10 
 
+Para instala a versão DEV ou Development utilize o arquivo [install_odoo_trustcodebr.sh](install_odoo_trustcodebr.sh) para est
 
-Disponível atualização automática em batch para sistemas debian based(apt-get).
-Utilize o arquivo [install_odoo_trustcodebr.sh](install_odoo_trustcodebr.sh) para este fim.
-
-
+- Para instalar o odoo em versao do produção use os passos abaixo:
 
 # 1º Passo - Instalar o Postgres
 
