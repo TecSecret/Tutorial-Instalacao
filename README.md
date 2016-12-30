@@ -5,8 +5,6 @@ Disponível atualização automática em batch para sistemas debian based(apt-ge
 Utilize o arquivo [install_odoo_trustcodebr.sh](install_odoo_trustcodebr.sh) para este fim.
 
 
-Acompanhar este tutorial em vídeo:
- https://www.youtube.com/watch?v=O7oxFM3hXm8
 
 # 1º Passo - Instalar o Postgres
 
@@ -17,16 +15,9 @@ Acompanhar este tutorial em vídeo:
     * sudo apt-get install postgresql
  
 
-- Criar usuários
-    * sudo su postgres
-    * psql
-    * alter user postgres with password '123';
-    * Acessar o pgadmin com o usuário postgres e criar um usuário para o Odoo por lá
-
-
 # 2º Passo - Baixar as dependências do Odoo
 
-* Baixar o arquivo [dependencias apt-get](apt-requirements)
+* Baixaro o arquivo [dependencias apt-get](apt-requirements)
 * Baixar o arquivo [dependencias pip](pip-requirements)
 * sudo apt-get install -y --no-install-recommends $(grep -v '^#' apt-requirements)
 * sudo pip install --upgrade pip
