@@ -1,5 +1,6 @@
 ##### Dependências Odoo #####
 python-pip
+python-dev
 libxml2-dev
 libxslt-dev
 libevent-dev
@@ -9,6 +10,7 @@ libpq-dev
 libjpeg-dev
 nodejs
 npm
+gcc
 
 ##### Dependências da Localização Brasileira #####
 python-libxml2
