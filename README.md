@@ -1,8 +1,10 @@
 # Tutorial Instalação do Odoo no Ubuntu Server 16.10 
 
-Para instala a versão DEV ou Development utilize o arquivo [install_odoo_trustcodebr.sh](install_odoo_trustcodebr.sh) para est
+Para instala a versão DEV ou Development utilize o arquivo [install_odoo_trustcodebr.sh](install_odoo_trustcodebr.sh).
 
-- Para instalar o odoo em versao do produção use os passos abaixo:
+
+
+Para instalar o odoo em versao do produção use os passos abaixo:
 
 # 1º Passo - Instalar o Postgres
 
@@ -28,7 +30,7 @@ Para instala a versão DEV ou Development utilize o arquivo [install_odoo_trustc
 * sudo apt-get install -y wkhtmltopdf
 
 
-# 3º Passo - Baixar o código do Odoo (repo oficial)
+# 3º Passo - Baixar o código do Odoo (repo oficial Nightly)
 
 * wget -O - https://nightly.odoo.com/odoo.key | apt-key add -
 * echo "deb http://nightly.odoo.com/10.0/nightly/deb/ ./" >> /etc/apt/sources.list
@@ -54,3 +56,5 @@ Para instala a versão DEV ou Development utilize o arquivo [install_odoo_trustc
 * Edite a linha addons_patch adicionando as pastas "odoo-brasil,server-tools,reporting-engine,account-fiscal-rule"  /opt/odoo/pasta_clonada e salve o arquivo e reinicie o serviço do Odoo.
 * Acesse http://ip_do_server:8069/web/database e configure um banco de dados para uso.
 * Na interface para instalação de aplicativos procure por Brasil e instale a localização brasileira mantida pea Truste Code.
+
+* É importante que você busque na pesquisa de aplicativos por BR e instale 1 por 1 separadamente dando preferência para os apresentados como Trust Code. Este procedimento evita muitos erros.
