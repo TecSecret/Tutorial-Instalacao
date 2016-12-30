@@ -1,4 +1,4 @@
-# Tutorial Instalação para Desenvolvedores
+# Tutorial Instalação do Odoo no Ubuntu Server 16.10
 
 
 Disponível atualização automática em batch para sistemas debian based(apt-get).
@@ -15,7 +15,7 @@ Acompanhar este tutorial em vídeo:
 
 - Instalar o postgresql
     * sudo apt-get install postgresql
-    * sudo apt-get install pgadmin3
+ 
 
 - Criar usuários
     * sudo su postgres
@@ -33,16 +33,28 @@ Acompanhar este tutorial em vídeo:
 * sudo pip install -r pip-requirements
 * sudo npm install -g less
 * sudo ln -s /usr/bin/nodejs /usr/bin/node
-* wget http://download.gna.org/wkhtmltopdf/0.12/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb
-* sudo dpkg -i wkhtmltox-0.12.1_linux-trusty-amd64.deb
+* sudo apt-get install -y wkhtmltopdf
 
 
-# 3º Passo - Baixar o código do Odoo
+# 3º Passo - Baixar o código do Odoo (repo oficial)
 
-* git clone https://github.com/odoo/odoo.git
+* wget -O - https://nightly.odoo.com/odoo.key | apt-key add -
+* echo "deb http://nightly.odoo.com/10.0/nightly/deb/ ./" >> /etc/apt/sources.list
 
-# 4º Passo - Rodar o Odoo
 
-* Baixar o arquivo de [configuração do odoo](odoo-config)
-* Colocar o arquivo dentro da pasta do odoo e configurar usuario e senha
-* ./odoo-bin --config=odoo-config
+# 4º Passo - Instalar o Odoo
+
+* apt-get -y update && apt-get install -y odoo
+
+# 6º Passo - Testar se o Odoo foi instalado
+* http://seuip:8069
+* Importante: Quando abrir a página da web do odoo não configurar banco de dados nada.
+
+# 7º Passo - Instalar a localização Brasileira 
+* mkdir /opt/odoo
+* cd /opt/odoo
+* git clone https://github.com/Trust-Code/odoo-brasil --branch 10.0
+* nano /etc/odoo/odoo.conf
+* Edite a linha addons_patch adicionando o caminho /opt/odoo/odoo-brasil e salve o arquivo e reinicie o serviço do Odoo
+* Acesse http://ip_do_server:8069/web/database e configure um banco de dados para uso.
+* Na interface para instalação de aplicativos procure por Brasil e instale a localização brasileira mantida pea Truste Code.
