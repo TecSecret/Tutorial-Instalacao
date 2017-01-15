@@ -1,31 +1,22 @@
 #! /bin/bash
 
 echo "Esse script é focado na instalação do odoo V.10"
-echo "com o foco em desenvolvimento."
+echo "este script usa o repositório oficial (Nightly)"
 
 echo "Atualizando cache do sistema"
-sudo apt-get update
-echo "Instalando git"
+sudo apt-get update -y
+sudo apt-get upgrade -y
+echo "Instalando git e outras nescessidades"
 sudo apt-get install git -y
+sudo apt-get install nano -y
 
 echo "instalando PostgresSql"
 sudo apt install postgresql -y
 echo "Instalação do PostgresSql completa"
 
-echo "Instalando pgAdmin"
-sudo apt install pgadmin3 -y
-echo "pgAdmin instalado"
-
-echo "Criar usuário."
-sudo -u postgres -- psql -c "ALTER USER postgres WITH PASSWORD '123';"
-sudo -u postgres -- psql -c "DROP ROLE odoo;"
-sudo -u postgres -- psql -c "CREATE ROLE odoo LOGIN ENCRYPTED PASSWORD 'md5f7b7bca97b76afe46de6631ff9f7175c' NOSUPERUSER INHERIT CREATEDB CREATEROLE REPLICATION"
-echo "Usuário odoo criado. Senha = '123'"
-echo "usuário postgress agora tem a senha= '123'"
-
-
 echo "Instalando ##### Dependências Odoo #####"
 sudo apt-get install --no-install-recommends python-pip -y
+sudo apt-get install --no-install-recommends python-dev -y
 sudo apt-get install --no-install-recommends libxml2-dev -y
 sudo apt-get install --no-install-recommends libxslt-dev -y
 sudo apt-get install --no-install-recommends libsasl2-dev -y
@@ -35,6 +26,7 @@ sudo apt-get install --no-install-recommends libjpeg-dev -y
 sudo apt-get install --no-install-recommends nodejs -y
 sudo apt-get install --no-install-recommends npm -y
 sudo apt-get install node-less -y
+sudo apt-get install gcc -y
 
 echo "instalando ##### Dependências da Localização Brasileira #####"
 sudo apt-get install --no-install-recommends python-libxml2 -y
@@ -103,27 +95,38 @@ sudo -H pip install suds_requests
 sudo -H pip install pytrustnfe
 sudo -H pip install python-boleto
 sudo -H pip install python-cnab
+sudo -H pip install PyTrustNFe
 sudo -H pip install http://labs.libre-entreprise.org/frs/download.php/897/pyxmlsec-0.3.1.tar.gz
 echo "pip e seus requerimentos estão instalados."
 
-echo "clonando repositório git do odoo. Isso pode demorar um bom tempo."
-echo "se sua internet é lenta, recomenda-se tomar um café enquanto aguarda."
-git clone https://github.com/odoo/odoo.git
+echo "instalando o wkhtmltopdf e dependências"
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo apt-get install wkhtmltopdf -y
+echo "wkhtmltopdf instalado com sucesso.
 
+echo "instalando o repositório oficial odoo (Nightly)"
+sudo wget -O - https://nightly.odoo.com/odoo.key | apt-key add -
+sudo echo "deb http://nightly.odoo.com/10.0/nightly/deb/ ./" >> /etc/apt/sources.list
+echo "repositório adicionado com sucesso."
 
-echo "Terminando o arquivo de configuração, quase lá."
-rm ~/odoo/odoo-config
-echo "[options]" >> ~/odoo/odoo-config
-echo "addons_path=addons,odoo/addons,~/odoo-brasil" >> ~/odoo/odoo-config
-echo "admin_passwd = admin" >> ~/odoo/odoo-config
-echo "auto_reload = False" >> ~/odoo/odoo-config
-echo "csv_internal_sep = ," >> ~/odoo/odoo-config
-echo "db_host = localhost" >> ~/odoo/odoo-config
-echo "db_maxconn = 64" >> ~/odoo/odoo-config
-echo "db_name = False" >> ~/odoo/odoo-config
-echo "db_port = False" >> ~/odoo/odoo-config
-echo "db_template = template0" >> ~/odoo/odoo-config
-echo "db_user = odoo" >> ~/odoo/odoo-config
-echo "db_password= 123" >> ~/odoo/odoo-config
+echo "instalando o odoo 10"
+sudo apt-get update
+sudo apt-get install odoo -y
+echo "odoo 10 instalado com sucesso."
 
-git clone https://github.com/Trust-Code/odoo-brasil.git
+echo "add localização brasileira da trustcode"
+echo "este processo pode demorar um pouco."
+sudo mkdir /opt/odoo
+sudo cd /opt/odoo
+git clone https://github.com/Trust-Code/odoo-brasil --branch 10.0
+cd
+echo "licalização brasileira adicionado com sucesso"
+
+echo "configurar o arquivo de configuração do odoo"
+echo "addons_path= /opt/odoo/odoo-brasil,/usr/lib/python2.7/dist-packages/odoo/addons" >> ~/etc/odoo/odoo.conf
+echo "admin_passwd = admin" >> ~/etc/odoo/odoo.conf
+echo "arquivo de configuração finalizado com sucesso."
+
+echo "reiniciando o servidor. Após este processo acesse http://seuip:8069. Obrigado"
+reboot
+
